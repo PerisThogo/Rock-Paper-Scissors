@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .game-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .choice {
+            font-size: 3rem;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.3s ease;
+        }
+
+        .choice.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #2ecc71;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #rock {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        #paper {
+            background-color: #4ecdc4;
+            color: white;
+        }
+
+        #scissors {
+            background-color: #ffd166;
+            color: #333;
+        }
+
+        #reset {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .score {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-10px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(-5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock Paper Scissors</h1>
+        
+        <div class="result" id="result">Choose your move!</div>
+        
+        <div class="choices">
+            <div id="player-choice" class="choice">✊</div>
+            <div id="computer-choice" class="choice">✋</div>
+        </div>
+        <div style="display: flex; justify-content: space-around; width: 100%;">
+            <span>You</span>
+            <span>Computer</span>
+        </div>
+        
+        <div class="buttons">
+            <button id="rock" onclick="playGame('rock')">✊ Rock</button>
+            <button id="paper" onclick="playGame('paper')">✋ Paper</button>
+            <button id="scissors" onclick="playGame('scissors')">✌️ Scissors</button>
+        </div>
+        
+        <div class="score" id="score">Wins: 0, Losses: 0, Ties: 0</div>
+        <button id="reset" onclick="resetScore()">Reset Score</button>
+    </div>
+
+    <script>
+        let wins = 0;
+        let losses = 0;
+        let ties = 0;
+
+        function playGame(playerMove) {
+            // Reset animations
+            document.getElementById('player-choice').classList.remove('active', 'shake');
+            document.getElementById('computer-choice').classList.remove('active', 'shake');
+            
+            // Show player choice immediately
+            const playerChoice = document.getElementById('player-choice');
+            playerChoice.textContent = getEmoji(playerMove);
+            playerChoice.classList.add('active');
+            
+            // Computer "thinking" delay
+            setTimeout(() => {
+                const moves = ['rock', 'paper', 'scissors'];
+                const computerMove = moves[Math.floor(Math.random() * 3)];
+                
+                const computerChoice = document.getElementById('computer-choice');
+                computerChoice.textContent = getEmoji(computerMove);
+                computerChoice.classList.add('active', 'shake');
+                
+                let result = '';
+                if (computerMove === playerMove) {
+                    result = 'Tie!';
+                    ties++;
+                } else if (
+                    (playerMove === 'rock' && computerMove === 'scissors') ||
+                    (playerMove === 'paper' && computerMove === 'rock') ||
+                    (playerMove === 'scissors' && computerMove === 'paper')
+                ) {
+                    result = 'You win! 🎉';
+                    wins++;
+                } else {
+                    result = 'You lose! 😢';
+                    losses++;
+                }
+                
+                document.getElementById('result').textContent = result;
+                document.getElementById('result').style.color = 
+                    result.includes('win') ? '#2ecc71' : 
+                    result.includes('lose') ? '#e74c3c' : '#3498db';
+                
+                updateScore();
+            }, 500);
+        }
+
+        function getEmoji(move) {
+            return move === 'rock' ? '✊' : move === 'paper' ? '✋' : '✌️';
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = 
+                `Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`;
+        }
+
+        function resetScore() {
+            wins = 0;
+            losses = 0;
+            ties = 0;
+            updateScore();
+            document.getElementById('result').textContent = 'Choose your move!';
+            document.getElementById('result').style.color = '#333';
+            document.getElementById('player-choice').classList.remove('active');
+            document.getElementById('computer-choice').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
