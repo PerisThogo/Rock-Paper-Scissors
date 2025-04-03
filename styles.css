@@ -1,0 +1,114 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.game-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+
+.choices {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.choice {
+    font-size: 3rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s ease;
+}
+
+.choice.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.result {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #2ecc71;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+#rock {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+#paper {
+    background-color: #4ecdc4;
+    color: white;
+}
+
+#scissors {
+    background-color: #ffd166;
+    color: #333;
+}
+
+#reset {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.score {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.choices-label {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-10px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}
